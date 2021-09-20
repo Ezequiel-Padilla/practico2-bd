@@ -37,7 +37,12 @@ WHERE fa.film_id IS NULL;
 #### 5 - Mostrar los actores que participan en películas por arriba del promedio que el resto.
 FALLA, no se puede referenciar al alias `films_count`...pero podriamos solucionarlo con alias
 ```sql
-Consulta a revisar por el docente...
+SELECT actor.actor_id, COUNT(film_actor.film_id) AS films_count
+FROM actor
+INNER JOIN film_actor
+ON actor.actor_id=film_actor.actor_id
+WHERE films_count >= (SELECT AVG(film.film_id) FROM actor INNER JOIN film_actor ON actor.actor_id=film_actor.actor_id)
+GROUP BY actor.actor_id
 ```
 #### 6 - Mostrar los actores que participan en películas por debajo del promedio que el resto.
 ```sql
